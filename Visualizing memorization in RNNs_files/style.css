@@ -1,0 +1,691 @@
+d-title figure {
+    margin: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  math-latex[display-mode] {
+    font-size: 90%;
+  }
+  #ar-demo figcaption:not(#ar-demo-caption) {
+    font-size: 70%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  math-latex[display-mode] {
+    font-size: 80%;
+  }
+  #ar-demo #ar-demo-final-content .suggestions .suggestion {
+    text-align: center;
+  }
+  #ar-demo #ar-demo-final-content .suggestions .suggestion .word {
+    float: none;
+  }
+  #ar-demo #ar-demo-final-content .suggestions .suggestion .probability {
+    display: none;
+  }
+  #ar-demo figcaption:not(#ar-demo-caption) {
+    font-size: 60%;
+  }
+}
+@media only screen and (max-width: 400px) {
+  math-latex[display-mode] {
+    font-size: 70%;
+  }
+  #ar-demo figcaption:not(#ar-demo-caption) {
+    font-size: 50%;
+  }
+}
+
+
+.ar-hero {
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  grid-template-areas:
+    "textarea namearea";
+  margin-bottom: 10px;
+}
+
+.ar-hero:last-of-type {
+  margin-bottom: 1em;
+}
+
+.ar-hero .textarea {
+  grid-area: textarea;
+
+  font-family: monospace;
+  padding: 0.5em;
+  box-sizing: border-box;
+  background: #365d8d;
+  color: white;
+  line-height: 1.4em;
+  border-radius: 10px 0 0 10px;
+}
+
+.ar-hero .textarea span {
+  border-bottom: 0.2em solid transparent;
+  white-space: pre-wrap;
+}
+
+.ar-hero .textarea span.selected {
+  border-bottom-color: white;
+}
+
+.ar-hero .namearea {
+  grid-area: namearea;
+
+  display: flex;
+  background: #EEEEEE;
+  justify-content: center;
+  color: #555555;
+  border: 1px solid #E0E0E0;
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+}
+
+.ar-hero .namearea span {
+  align-self: center;
+  line-height: 1em;
+  text-align: center;
+}
+
+p ~ .ar-math-figure {
+  margin-top: calc(1em - 24px);
+}
+
+.ar-math-figure {
+  margin-top: 1em;
+  margin-bottom: 24px;
+}
+
+.ar-math-grid {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-auto-columns: auto;
+    grid-auto-rows: auto;
+    grid-auto-flow: column;
+    grid-column-gap: 0.2em;
+    grid-row-gap: 0.5em;
+
+    justify-items: start;
+    align-items: center;
+    justify-content: center;
+}
+.ar-math-grid > math-latex {
+  grid-row: 1;
+}
+.ar-math-grid > math-latex > .katex-display {
+  margin: 0;
+}
+.ar-math-grid > span.ar-math-annotation {
+  font-size: 12px;
+  line-height: 1.2em;
+  color: rgba(0, 0, 0, 0.6);
+  align-self: start;
+}
+
+#ar-recurrent-units ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 4px;
+  text-align: center;
+  padding: 0;
+  list-style: none;
+}
+
+#ar-recurrent-units ul li {
+  margin: 0;
+  background: #f3f3f3;
+  border-bottom: 3px solid #e3e3e3;
+  cursor: pointer;
+  line-height: 2em;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+#ar-recurrent-units ul li:hover {
+  border-bottom-color: #D9D9D9;
+}
+#ar-recurrent-units ul li.selected {
+  background: #D9D9D9;
+  border-bottom-color: #D9D9D9;
+}
+
+#ar-recurrent-units img {
+  max-width: 535px; /* Intrinsic SVG width */
+  margin: 0 auto 10px auto;
+  display: none;
+}
+#ar-recurrent-units figcaption {
+  display: none;
+}
+
+#ar-recurrent-units[data-show='nlstm'] .ar-recurrent-unit-nlstm,
+#ar-recurrent-units[data-show='lstm'] .ar-recurrent-unit-lstm,
+#ar-recurrent-units[data-show='gru'] .ar-recurrent-unit-gru {
+  display: block;
+}
+
+#ar-demo {
+  display: grid;
+  grid-template-columns: 20% auto;
+  grid-template-rows: repeat(4, 60px);
+  grid-template-areas:
+    "input-caption content"
+    "rnn-caption content"
+    "output-caption content"
+    "final-caption content"
+    ". caption";
+  grid-column-gap: 10px;
+}
+
+#ar-demo > figcaption {
+  text-align: right;
+  align-self: center;
+}
+
+#ar-demo > div {
+  position: relative;
+}
+
+#ar-demo svg, #ar-demo canvas {
+  display: block;
+  width: 100%; /* Indicate the the Grid layout, that svg and canvas are
+  streachable */
+}
+
+figcaption#ar-demo-input-caption { grid-area: input-caption; }
+#ar-demo-content { grid-area: content; }
+figcaption#ar-demo-rnn-caption { grid-area: rnn-caption; }
+figcaption#ar-demo-output-caption { grid-area: output-caption; }
+figcaption#ar-demo-final-caption { grid-area: final-caption; }
+
+#ar-demo #ar-demo-loader {
+  display: flex;
+  position: absolute;
+  top: 0;
+  height: 240px;
+  z-index: 1;
+  background: rgb(255, 255, 255, 0.8);
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#ar-demo #ar-demo-caption {
+  padding-top: 10px;
+  grid-area: caption;
+  text-align: left;
+}
+
+#ar-demo-input-content {
+  height: 60px;
+  position: relative;
+}
+
+#ar-demo-input-content .background {
+  width: 100%;
+  height: 100%;
+  background: #f3f3f3;
+  border: solid 1px #e3e3e3;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+#ar-demo-input-content .underline {
+  position: absolute;
+  bottom: 0;
+  overflow: hidden;
+  font-size: 1em;
+  font-family: "Courier New", monospace;
+  margin: 0 5px;
+}
+
+#ar-demo-input-content .underline-letter {
+  display: block;
+  float: left;
+  border-bottom: solid 1px black;
+  height: 0px;
+  overflow: hidden;
+  white-space: pre;
+  margin-right: 0.1em;
+}
+#ar-demo-input-content .underline-letter.empty {
+  border-bottom-color: transparent;
+}
+
+#ar-demo-input-content input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: calc(30px - 0.5em) 5px;
+  width: calc(100% - 10px);
+  height: 1em;
+  box-sizing: border-box;
+
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  font-family: "Courier New", monospace;
+  outline: none;
+}
+
+#ar-demo-input-content input:focus{
+
+}
+
+#ar-demo-rnn-content svg .cells rect {
+  fill: #f3f3f3;
+}
+
+#ar-demo-rnn-content svg .flow-in rect, #ar-demo-rnn-content svg .flow-out path {
+  fill: rgb(70, 130, 180);
+  opacity: 0.2;
+}
+
+#ar-demo-rnn-content svg .flow-arrow {
+  stroke-width: 2px;
+  stroke: rgb(70, 130, 180);
+  stroke-opacity: 0.5;
+}
+
+#ar-demo-output-content svg path {
+  fill: rgb(70, 130, 180);
+  opacity: 0.2;
+}
+
+#ar-demo-output-content .ar-loading {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+
+#ar-demo-final-content div.suggestions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  grid-column-gap: 10px;
+  height: 30px;
+}
+
+#ar-demo-final-content div.suggestions div.suggestion {
+  background: #f3f3f3;
+  border: solid 1px #e3e3e3;
+  box-sizing: border-box;
+  padding: 0px 8px;
+  font-size: 0.7em;
+  overflow: hidden;
+  line-height: 30px;
+  height: 30px;
+}
+
+#ar-demo-final-content div.suggestions div.suggestion span.word {
+  float: left;
+}
+
+
+#ar-demo-final-content div.suggestions div.suggestion span.probability {
+  float: right;
+}
+
+#ar-demo-final-content svg path {
+  fill: rgb(70, 130, 180);
+  opacity: 0.2;
+}
+
+.ar-visual-rnn {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 240px auto;
+  grid-template-areas:
+    "content-caption content"
+    ". caption";
+  grid-column-gap: 10px;
+}
+
+.ar-visual-rnn .descriptions {
+  display: grid;
+  grid-template-rows: 60px 60px 60px 60px;
+  align-items: center;
+  grid-area: content-caption;
+}
+
+.ar-visual-rnn .descriptions figcaption {
+  text-align: right;
+}
+
+.ar-visual-rnn svg {
+  grid-area: content;
+  width: 100%;
+  height: 240px;
+}
+
+.ar-visual-rnn svg path.arrow-up { stroke-width: 2px; }
+.ar-visual-rnn svg path.arrow-up.active { stroke: #9BC0DB; }
+.ar-visual-rnn svg path.arrow-up.inactive { stroke: #BBBBBB; }
+
+.ar-visual-rnn svg path.arrow-right { stroke-width: 2px; }
+.ar-visual-rnn svg path.arrow-right.active {stroke: #9BC0DB; }
+.ar-visual-rnn svg path.arrow-right.inactive { stroke: #BBBBBB; }
+
+.ar-visual-rnn > figcaption {
+  grid-area: caption;
+}
+
+.ar-connectivity {
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  grid-template-rows: 40px auto;
+  grid-template-areas:
+    "predictarea ."
+    "textarea namearea";
+  margin-bottom: 10px;
+}
+
+.ar-connectivity:last-of-type {
+  margin-bottom: 1em;
+}
+
+.ar-connectivity .textarea {
+  grid-area: textarea;
+
+  font-family: monospace;
+  padding: 0.5em;
+  box-sizing: border-box;
+  background: #365d8d;
+  color: white;
+  line-height: 1.4em;
+  border-radius: 0 0 0 10px;
+}
+
+.ar-connectivity .textarea span {
+  border-bottom: 0.2em solid transparent;
+  white-space: pre-wrap;
+}
+
+.ar-connectivity .textarea span.selected {
+  border-bottom-color: white;
+}
+
+.ar-connectivity .predictarea {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 2px;
+  align-items: center;
+}
+
+.ar-connectivity .predictarea .prediction {
+  line-height: 39px;
+  padding: 0 5px;
+  text-align: center;
+  background: #F3F3F3;
+  border-bottom: none;
+  border: 1px solid #E0E0E0;
+  border-bottom: none;
+  height: 39px;
+  overflow: hidden;
+  font-size: 0.9em;
+}
+
+.ar-connectivity .predictarea .prediction span.word {
+  float: left;
+}
+
+.ar-connectivity .predictarea .prediction span.probability {
+  float: right;
+}
+
+@media only screen and (max-width: 550px) {
+  .ar-connectivity .predictarea .prediction {
+    text-align: center;
+  }
+  .ar-connectivity .predictarea .prediction span.word {
+    float: none;
+  }
+  .ar-connectivity .predictarea .prediction span.probability {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 400px)  {
+  .ar-connectivity .predictarea .prediction {
+    font-size: 0.8em;
+  }
+}
+
+.ar-connectivity .namearea {
+  grid-area: namearea;
+
+  display: flex;
+  max-width: 60px;
+  background: #EEEEEE;
+  justify-content: center;
+  color: #555555;
+  border-radius: 0 5px 5px 0;
+  border: 1px solid #E0E0E0;
+  border-left: none;
+}
+
+.ar-connectivity .namearea span {
+  align-self: center;
+  display: inline-block;
+  transform: translate(0, 0) rotate(90deg);
+  transform-origin: center center;
+  line-height: 1em;
+  text-align: center;
+}
+
+#ar-walkthrough .ar-walkthrough-step {
+  min-height: 125px;
+}
+
+#ar-walkthrough .ar-walkthrough-step {
+  display: none;
+  grid-template-columns: 32px 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "number text"
+    ". warning";
+  grid-column-gap: 1em;
+}
+#ar-walkthrough .ar-walkthrough-step.ar-walkthrough-selected {
+  display: grid;
+}
+
+#ar-walkthrough .ar-walkthrough-step .ar-walkthrough-number {
+  grid-area: number;
+
+  width: 32px;
+  height: 32px;
+  color: hsl(280, 50%, 22%);
+  background: hsl(280, 71%, 88%);
+  border: 1px solid hsl(280, 71%, 84%);
+  border-radius: 100%;
+  text-align: center;
+  line-height: 32px;
+  font-size: 1.25em;
+  font-weight: 300;
+}
+
+#ar-walkthrough .ar-walkthrough-step .ar-walkthrough-text {
+  grid-area: text;
+}
+
+#ar-walkthrough .ar-walkthrough-step .ar-walkthrough-text p:first-of-type {
+  margin-top: 0;
+}
+
+#ar-walkthrough .ar-walkthrough-pages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 25px);
+  grid-column-gap: 25px;
+  justify-content: center;
+  margin: 0 0 1em 0;
+}
+
+#ar-walkthrough .ar-walkthrough-pages .ar-walkthrough-page {
+  height: 25px;
+  width: 25px;
+  color: hsl(280, 50%, 22%);
+  background: hsl(280, 71%, 88%);
+  border: 1px solid hsl(280, 71%, 84%);
+  border-radius: 100%;
+  text-align: center;
+  line-height: 25px;
+  font-size: 0.75em;
+  cursor: pointer;
+}
+
+#ar-accuracy-graph .legend {
+  display: grid;
+  margin-bottom: 10px;
+  grid-gap: 5px;
+  grid-template-columns: repeat(3, 145px);
+  justify-content: center;
+}
+
+@media screen and (max-width: 536px) {
+  #ar-accuracy-graph .legend {
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  }
+}
+
+#ar-accuracy-graph .legend svg.legend-item {
+  display: block;
+  width: 145px;
+}
+
+#ar-accuracy-graph .legend svg.legend-item .legend-background {
+  fill: #EBEBEB;
+}
+
+#ar-accuracy-graph .legend svg.legend-item .legend-color {
+  text-anchor: middle;
+  alignment-baseline: middle;
+  dominant-baseline: middle;
+  font: 12px sans-serif;
+}
+
+#ar-accuracy-graph .legend svg.legend-item .legend-text {
+  text-anchor: start;
+  alignment-baseline: middle;
+  dominant-baseline: middle;
+  font: 12px sans-serif;
+}
+
+figure.ar-table-container {
+  display: flex;
+  flex-direction: column;
+}
+
+table.ar-table {
+  margin: 0 auto 20px auto;
+  display: block;
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
+table.ar-table th, table.ar-table td {
+  padding: 2px 10px;
+}
+
+svg.ar-line-graph {
+  width: 100%;
+  shape-rendering: crispEdges;
+  font-size: 16px;
+}
+
+svg.ar-line-graph .tick text {
+  font-size: 14px;
+  fill: #505050;
+}
+
+svg.ar-line-graph .tick line {
+  stroke-width: 2;
+  stroke: #505050;
+}
+
+svg.ar-line-graph .background {
+  fill: #EBEBEB;
+}
+
+svg.ar-line-graph .facet {
+  font-size: 14px;
+}
+
+svg.ar-line-graph .facet-background {
+  fill: #D9D9D9;
+}
+
+svg.ar-line-graph path.line {
+  fill: none;
+  shape-rendering: geometricPrecision;
+  stroke-width: 1;
+  stroke-opacity: .7;
+}
+
+svg.ar-line-graph .grid line {
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+svg.ar-line-graph .grid .minor line {
+  stroke-opacity: .5;
+}
+
+svg.ar-line-graph .grid text {
+  display: none;
+}
+
+svg.ar-line-graph .axis path,
+svg.ar-line-graph .grid path {
+  display: none;
+}
+
+svg.ar-line-graph .axis.hide-axis {
+  display: none;
+}
+
+svg.ar-line-graph .legned rect {
+  fill: #EBEBEB;
+}
+
+svg.ar-line-graph .legned line {
+  stroke-width: 2;
+}
+
+figure .word {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+
+/* remove medium width view as this article doesn't use margin notes.
+   -> Use full from 768px instead of from 1000px */
+
+@media(min-width: 768px) and (max-width: 999px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 50px [middle-start] 50px [text-start kicker-end] 50px 50px 50px 50px 50px 50px 50px 50px [text-end gutter-start] 50px [middle-end] 50px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+  }
